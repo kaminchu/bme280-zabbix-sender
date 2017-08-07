@@ -2,10 +2,15 @@ import cron from "node-cron";
 import BME280 from "node-bme280";
 import ZabbixSender from "node-zabbix-sender";
 
-const zabbixHost = process.env.ZABBIX_HOST | "localhost";
+const {
+  HOST,
+  PORT,
+  ZABBIX_HOST,
+  ZABBIX_ITEM_KEY
+} = process.env;
 
 const bme280 = new BME280({ address: 0x76 });
-const Sender = new ZabbixSender({ host: zabbixHost });
+const Sender = new ZabbixSender({ host: HOST, port: PORT });
 
 cron.schedule("* * * * *", () => {
 
@@ -19,7 +24,7 @@ cron.schedule("* * * * *", () => {
         console.error("bme280 read error", _err);      
         throw err;
       }
-      Sender.addItem("room_temp", parseFloat(temperature));
+      Sender.addItem(ZABBIX_HOST, ZABBIX_ITEM_KEY, parseFloat(temperature));
       Sender.send((__err, res) => {
         if (__err) {
           console.error("zabbix send error");
