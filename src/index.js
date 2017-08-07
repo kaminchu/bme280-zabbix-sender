@@ -25,9 +25,9 @@ cron.schedule("* * * * *", () => {
           console.error("zabbix send error");
           throw __err;
         }
+        console.log("data sended. temperature: " + temperature );
         console.log(res);
       });
-      console.log("running a task every minute");
     });
   });
 });
