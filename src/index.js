@@ -11,15 +11,21 @@ cron.schedule("* * * * *", () => {
 
   bme280.begin((err) => {
     if (err) {
-      console.error("bme280 initializing error", err);
-      return;
+      console.error("bme280 initializing error", err);      
+      throw err;
     }
-    bme280.readPressureAndTemparature((err, pressure, temperature, humidity) => {
-      Sender.addItem("room_temp", temperature).send((err, res) => {
-        if (err) {
-          throw err;
+    bme280.readPressureAndTemparature((_err, pressure, temperature, humidity) => {
+      if (_err) {
+        console.error("bme280 read error", _err);      
+        throw err;
+      }
+      Sender.addItem("room_temp", parseFloat(temperature));
+      Sender.send((__err, res) => {
+        if (__err) {
+          console.error("zabbix send error");
+          throw __err;
         }
-        console.dir(res);
+        console.log(res);
       });
       console.log("running a task every minute");
     });
