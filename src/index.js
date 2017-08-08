@@ -1,6 +1,7 @@
 import cron from "node-cron";
 import BME280 from "node-bme280";
 import ZabbixSender from "node-zabbix-sender";
+import {} from "dotenv/config";
 
 const {
   HOST,
