@@ -5,10 +5,11 @@ zabbixにbme280から取得した温度を送りたかった
 ## Getting Started
 
 raspberrypi+bme280が必須。  
+`.env.sample`をコピーして`.env`を作成して、よしなにする。
 
 ```
 npm install
-HOST=<zabbixの動いてるサーバのIPとか> PORT=<zabbixの動いてるサーバのポート> ZABBIX_HOST=<任意のホスト名> ZABBIX_ITEM_KEY=<任意のアイテムkey> npm start
+npm start
 ```
 
 ## License
