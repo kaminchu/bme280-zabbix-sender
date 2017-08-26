@@ -1,0 +1,11 @@
+{
+  "name": "send_room_temper",
+  "script": "dist/index.js",
+  "exec_mode": "fork",
+  "instances": 0,
+  "log-date-format": "YYYY-MM-DD HH:mm Z",
+  "ignore_watch" : [
+    "node_modules",
+    "src"
+  ]
+}
