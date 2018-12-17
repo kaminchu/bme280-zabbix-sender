@@ -31,7 +31,8 @@ npm start
 
 ```
 sudo npm install pm2 -g
-pm2 startup ubuntu
+sudo pm2 start pm2.json
+sudo pm2 save
 ```
 で表示されるコマンドを実行
 
