@@ -13,6 +13,10 @@ const {
   CRON_STRING
 } = process.env;
 
+const options = {
+  i2cBusNo   : 1, // defaults to 1
+  i2cAddress : 0x76
+};
 const bme280 = new BME280();
 const Sender = new ZabbixSender({ host: SERVER_HOST, port: parseInt(SERVER_PORT || "10051", 10) });
 
