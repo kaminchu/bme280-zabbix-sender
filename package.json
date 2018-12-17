@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/kaminchu/send_room_temper#readme",
   "dependencies": {
+    "@types/node": "^10.12.15",
     "dotenv": "^4.0.0",
     "node-bme280": "git+https://github.com/kaminchu/node-BME280.git#master",
     "node-cron": "^1.2.0",
@@ -36,6 +37,7 @@
     "flow-bin": "^0.52.0",
     "flow-typed": "^2.1.5",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2"
+    "gulp-babel": "^6.1.2",
+    "typescript": "^3.2.2"
   }
 }
