@@ -1,4 +1,4 @@
-import cron from "node-cron";
+import {schedule} from "node-cron";
 import BME280 from "node-bme280";
 import ZabbixSender from "node-zabbix-sender";
 import "dotenv/config";
@@ -23,7 +23,7 @@ bme280.begin((err) => {
   }
 });
 
-cron.schedule(CRON_STRING, () => {
+schedule(CRON_STRING, () => {
 
   bme280.readPressureAndTemparature((_err, pressure, temperature, humidity) => {
     if (_err) {
