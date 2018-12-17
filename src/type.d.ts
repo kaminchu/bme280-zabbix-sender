@@ -1,2 +1,2 @@
-declare module "node-bme280";
+declare module "bme280-sensor";
 declare module "node-zabbix-sender";

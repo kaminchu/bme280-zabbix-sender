@@ -1,5 +1,5 @@
 import {schedule} from "node-cron";
-import BME280 from "node-bme280";
+import BME280 from "bme280-sensor";
 import ZabbixSender from "node-zabbix-sender";
 import "dotenv/config";
 
@@ -13,32 +13,33 @@ const {
   CRON_STRING
 } = process.env;
 
-const bme280 = new BME280({ address: 0x76 });
-const Sender = new ZabbixSender({ host: SERVER_HOST, port: parseInt(SERVER_PORT, 10) });
+const bme280 = new BME280();
+const Sender = new ZabbixSender({ host: SERVER_HOST, port: parseInt(SERVER_PORT || "10051", 10) });
 
-bme280.begin((err) => {
-  if (err) {
-    console.error("bme280 initializing error", err);
-    throw err;
-  }
-});
-
-schedule(CRON_STRING, () => {
-
-  bme280.readPressureAndTemparature((_err, pressure, temperature, humidity) => {
-    if (_err) {
-      console.error("bme280 read error", _err);
-      throw _err;
-    }
-    Sender.addItem(ZABBIX_HOST, ZABBIX_ITEM_KEY_TEMP, temperature);
-    Sender.addItem(ZABBIX_HOST, ZABBIX_ITEM_KEY_HUM, humidity);
-    Sender.addItem(ZABBIX_HOST, ZABBIX_ITEM_KEY_PRESS, pressure / 100);
-    Sender.send((__err, res) => {
-      if (__err) {
-        console.error("zabbix send error");
-        throw __err;
-      }
-      console.log(res);
+const readSensorData = () => {
+  bme280.readSensorData()
+    .then((data: any) => {
+      Sender.addItem(ZABBIX_HOST, ZABBIX_ITEM_KEY_TEMP, data.temperature_C);
+      Sender.addItem(ZABBIX_HOST, ZABBIX_ITEM_KEY_HUM, data.humidity);
+      Sender.addItem(ZABBIX_HOST, ZABBIX_ITEM_KEY_PRESS, data.pressure_hPa);
+      Sender.send((__err: any, res: any) => {
+        if (__err) {
+          console.error("zabbix send error");
+          throw __err;
+        }
+        console.log(res);
+      });
+ 
+      console.log(`data = ${JSON.stringify(data, null, 2)}`);
+    })
+    .catch((err: any) => {
+      console.log(`BME280 read error: ${err}`);
     });
-  });
-});
+};
+
+bme280.init()
+  .then(() => {
+    console.log('BME280 initialization succeeded');
+    schedule(CRON_STRING || "* * * * *", readSensorData);
+  })
+  .catch((err: any) => console.error(`BME280 initialization failed: ${err} `));

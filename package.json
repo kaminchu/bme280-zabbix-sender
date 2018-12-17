@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc src/index.ts",
+    "build": "tsc",
     "start": "ts-node src/index.ts"
   },
   "repository": {
@@ -20,8 +20,8 @@
   "dependencies": {
     "@types/node": "^10.12.15",
     "@types/node-cron": "^2.0.0",
+    "bme280-sensor": "^0.1.6",
     "dotenv": "^4.0.0",
-    "node-bme280": "git+https://github.com/kaminchu/node-BME280.git#master",
     "node-cron": "^1.2.1",
     "node-zabbix-sender": "^1.1.0",
     "ts-node": "^7.0.1"
