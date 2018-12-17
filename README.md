@@ -3,6 +3,20 @@
 zabbixにbme280から取得した温度を送りたかった
 
 ## Getting Started
+install git
+```
+sudo apt install git
+```
+
+install node
+```
+sudo apt-get install -y nodejs npm
+sudo npm cache clean
+sudo npm install n -g
+	
+sudo n v10.14.1
+sudo apt-get purge -y nodejs npm
+```
 
 raspberrypi+bme280が必須。  
 `.env.sample`をコピーして`.env`を作成して、よしなにする。
