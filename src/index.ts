@@ -1,22 +1,7 @@
-// @flow
 import cron from "node-cron";
 import BME280 from "node-bme280";
 import ZabbixSender from "node-zabbix-sender";
-import {} from "dotenv/config";
-
-// types
-declare class env {
-  SERVER_HOST: string;
-  SERVER_PORT: string;
-  ZABBIX_HOST: string;
-  ZABBIX_ITEM_KEY_TEMP: string;
-  ZABBIX_ITEM_KEY_HUM: string;
-  ZABBIX_ITEM_KEY_PRESS: string;
-  CRON_STRING: string;
-}
-declare class process {
-   static env: env;
-}
+import "dotenv/config";
 
 const {
   SERVER_HOST,
@@ -57,5 +42,3 @@ cron.schedule(CRON_STRING, () => {
     });
   });
 });
-
-
